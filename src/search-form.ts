@@ -1,5 +1,12 @@
 import { renderBlock } from "./lib.js";
 
+interface SearchFormData {
+  cityForm: string;
+  dateInForm: string;
+  dateOutForm: string;
+  priceForm: number;
+}
+
 function formatDate(date) {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -18,6 +25,26 @@ export function renderSearchFormBlock(dateIn: Date, dateOut: Date) {
 
   formatDate(today);
   formatDate(lastDayOfMonth);
+
+  function search(searchFormData: SearchFormData) {
+    console.log(searchFormData);
+  }
+
+  function onSearchClick() {
+    const cityForm = (document.getElementById("city") as HTMLInputElement)
+      .value;
+    const dateInForm = (
+      document.getElementById("check-in-date") as HTMLInputElement
+    ).value;
+    const dateOutForm = (
+      document.getElementById("check-out-date") as HTMLInputElement
+    ).value;
+    const priceForm = Number(
+      (document.getElementById("max-price") as HTMLInputElement).value
+    );
+
+    search({ cityForm, dateInForm, dateOutForm, priceForm });
+  }
 
   renderBlock(
     "search-form-block",
@@ -64,4 +91,5 @@ export function renderSearchFormBlock(dateIn: Date, dateOut: Date) {
     </form>
     `
   );
+  document.getElementById("searchBtn").addEventListener("click", onSearchClick);
 }
